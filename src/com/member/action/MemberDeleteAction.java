@@ -7,15 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.member.db.MemberDAO;
-import com.member.db.MemberDTO;
 
-public class MemberUpdateProAction implements Action {
+public class MemberDeleteAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        System.out.println("M : MemberUpdateProAction_execute() 호출! ");
+        System.out.println("M : MemberDeleteAction_execute() 호출");
 		
-        // 세션 제어 
+        //세션제어
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("id");
         
@@ -26,25 +25,13 @@ public class MemberUpdateProAction implements Action {
         	return forward;
         }
         
-        // 한글처리
-        request.setCharacterEncoding("UTF-8");
-        // 전달된 정보를 저장(DTO)
-        MemberDTO dto = new MemberDTO();
+        // 전달되는 파라미터값 저장(id,pass)
+        String pass = request.getParameter("pass");
         
-        dto.setAge(Integer.parseInt(request.getParameter("age")));
-        dto.setEmail(request.getParameter("email"));
-        dto.setGender(request.getParameter("gender"));
-        dto.setId(request.getParameter("id"));
-        dto.setName(request.getParameter("name"));
-        dto.setPass(request.getParameter("pass"));
-        
-        // DAO생성 -> updateMember(DTO);
+        // DAO 객체 생성 - deleteMember(id,pass)
         MemberDAO dao = new MemberDAO();
-        int check = dao.updateMember(dto);
-        		
-        // 수정 결과에 따른 페이지 이동
-        // (0 : 비밀번호 오류, 1 : 수정완료 ,-1: 아이디없음)
-        // => 자바스크립트 사용 이동
+        int check = dao.deleteMember(id,pass);
+        // 페이지 이동(0/1/-1) => JS 사용
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
         
@@ -65,13 +52,19 @@ public class MemberUpdateProAction implements Action {
         	return null; 
         }
         
+        
+        
         // check==1 일때
+        // 세션 초기화(로그인 정보 초기화)
+        session.invalidate();
+        
         out.print("<script>");
-    	out.print(" alert('정보 수정완료!'); ");
+    	out.print(" alert('회원 삭제 완료!'); ");
     	out.print(" location.href='./Main.me'; ");
     	out.print("</script>");
     	out.close();
 		return null;
+	
 	}
 
 }
