@@ -255,6 +255,31 @@ public class BasketDAO {
 	// basketDelete(b_num)
 	
 	
+	// basketDelete(id)-구매후 장바구니 전체 제거
+	public void basketDelete(String id){
+		
+		try {
+			conn = getConnection();
+			// 구매후 아이디에 해당하는 모든 장보구니 초기화
+			sql = "delete from itwill_basket where b_m_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			pstmt.executeUpdate();
+			
+			System.out.println("DAO : 구매후 장바구니 제거");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+	}	
+	// basketDelete(id)-구매후 장바구니 전체 제거
+	
+	
+	
+	
 	
 	
 	

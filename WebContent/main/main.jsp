@@ -49,6 +49,10 @@
 	<h3><a href="./BasketList.ba">쇼핑몰 장바구니(사용자)</a></h3>
 	
 	<hr>
+	
+	<h3><a href="./OrderList.or">쇼핑몰 주문목록(사용자)</a></h3>
+	
+	<hr>
 	<!-- 관리자만 사용가능한 메뉴 생성 -->
 	<%
 		 // 참조형데이터 값 비교시 항상 null값을 먼저 비교후 데이터 비교 
@@ -57,6 +61,8 @@
 	   <h3><a href="./MemberList.me">회원 목록보기</a></h3>
 	  
 	   <h3><a href="./AdminGoodsList.ag">상품 목록보기(관리자)</a></h3>
+	   
+	   <h3><a href="./AdminOrderList.ao">주문 목록보기(관리자)</a></h3>
 	
 	<%
 	   }
